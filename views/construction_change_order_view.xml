@@ -36,7 +36,7 @@
                             <field name="guarantor_1" attrs="{'readonly': [['state', 'in', ['customer_approved', 'reject', 'done', 'cancel']]]}"/>
                             <field name="guarantor_2" attrs="{'readonly': [['state', 'in', ['customer_approved', 'reject', 'done', 'cancel']]]}"/>
                             <field name="project_id" attrs="{'readonly': [['state', 'in', ['customer_approved', 'reject', 'done', 'cancel']]]}"/>
-                            <field name="analytic_account_id" attrs="{'readonly': [['state', 'in', ['draft','confirm','approved_hr_manager','customer_approved', 'reject', 'done', 'cancel']]]}"/>
+                            <field name="analytic_account_id" attrs="{'readonly': [['state', 'in', ['customer_approved', 'reject', 'done', 'cancel']]]}"/>
                             <field name="task_id" attrs="{'readonly': [['state', 'in', ['customer_approved', 'reject', 'done', 'cancel']]]}"/>
                             <field name="is_saleorder" invisible="1"/>
                         </group>
