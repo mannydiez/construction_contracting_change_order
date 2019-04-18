@@ -17,7 +17,8 @@
                     <button string="Reject" name="reject_state" states="confirm,approved_hr_manager" type="object" groups="project.group_project_manager"/>
                     <button string="Cancel" name="cancel_state" states="draft" type="object"/>
                     <button string="Set To Draft" name="draft_state" states="cancel,reject" type="object"/>
-                    <button string="Create Quotation" name="create_saleorder" class="oe_highlight" type="object" attrs="{'invisible': ['|', ('is_saleorder', '!=', False), ('state', 'not in', ['done'])]}" groups="project.group_project_manager"/>
+                    <button string="Create Quotation" name="create_saleorder" class="oe_highlight" type="object" invisible="1" groups="project.group_project_manager"/>
+                    <!-- <button string="Create Quotation" name="create_saleorder" class="oe_highlight" type="object" attrs="{'invisible': ['|', ('is_saleorder', '!=', False), ('state', 'not in', ['done'])]}" groups="project.group_project_manager"/> -->
                     <field name="state" widget="statusbar" statusbar_visible="draft,confirm,approved_hr_manager,customer_approved,done" colspan="2"/>
                 </header>
                 <sheet>
