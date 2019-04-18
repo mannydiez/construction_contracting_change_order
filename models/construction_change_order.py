@@ -5,7 +5,7 @@ from odoo.exceptions import UserError
 import logging
 _logger = logging.getLogger(__name__)
 
-
+_logger.critical('ConstructionChangeOrder INSTALLED')
 class ConstructionChangeOrder(models.Model):
     _name = 'construction.change.order'
     _description = "Change Order"
@@ -87,10 +87,6 @@ class ConstructionChangeOrder(models.Model):
         string='Contract/Analytic Account',
         required=True,
     )
-    # proxy_analytic_account_id = fields.Many2one(
-    #     'account.analytic.account',
-    #     string='Contract/Analytic Account',
-    # )
     reason_note = fields.Text(
         string='Reason for Change',
     )
@@ -224,7 +220,7 @@ class ConstructionChangeOrder(models.Model):
 
     @api.model
     def create(self, vals):
-        _logger.warning('vals = {}'.format(vals))
+        _logger.critical('CREATE en ConstructionChangeOrder MODULE HAS BEEN SUCCESSFULLY OVERRIDE')
         name = self.env['ir.sequence'].next_by_code('construction.change.order.seq')
         vals.update({
         'name': name
@@ -237,6 +233,7 @@ class ConstructionChangeOrder(models.Model):
 
     @api.multi
     def write(self,vals):
+        _logger.critical('WRITE en ConstructionChangeOrder MODULE HAS BEEN SUCCESSFULLY OVERRIDE')
         if vals.get('project_id'):
             project_obj = self.env['project.project'].browse(vals['project_id'])
             vals.update({'analytic_account_id':project_obj.analytic_account_id.id})
