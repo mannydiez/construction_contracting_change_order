@@ -21,7 +21,7 @@
     ],
     'author' : 'Probuse Consulting Service Pvt. Ltd.',
     'website': 'www.probuse.com',
-    'version': '1.0',
+    'version': '1.2',
     'description': """
 change order
 change order construction

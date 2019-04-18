@@ -2,6 +2,8 @@
 
 from openerp import models, fields, api, _
 from odoo.exceptions import UserError
+import logging
+_logger = logging.getLogger(__name__)
 
 
 class ConstructionChangeOrder(models.Model):
@@ -85,6 +87,10 @@ class ConstructionChangeOrder(models.Model):
         string='Contract/Analytic Account',
         required=True,
     )
+    # proxy_analytic_account_id = fields.Many2one(
+    #     'account.analytic.account',
+    #     string='Contract/Analytic Account',
+    # )
     reason_note = fields.Text(
         string='Reason for Change',
     )
@@ -218,11 +224,23 @@ class ConstructionChangeOrder(models.Model):
 
     @api.model
     def create(self, vals):
+        _logger.warning('vals = {}'.format(vals))
         name = self.env['ir.sequence'].next_by_code('construction.change.order.seq')
         vals.update({
         'name': name
         })
+        #for readonly analytic_account_id
+        project_obj = self.env['project.project'].browse(vals['project_id'])
+        vals.update({'analytic_account_id':project_obj.analytic_account_id.id})
+        #
         return super(ConstructionChangeOrder, self).create(vals)
+
+    @api.multi
+    def write(self,vals):
+        if vals.get('project_id'):
+            project_obj = self.env['project.project'].browse(vals['project_id'])
+            vals.update({'analytic_account_id':project_obj.analytic_account_id.id})
+        return super(ConstructionChangeOrder, self).write(vals)
 
     @api.onchange('project_id')
     def _onchange_project(self):
@@ -334,5 +352,4 @@ class ConstructionChangeOrder(models.Model):
             quotation = quo_obj.create(vals)
             rec._prepare_quotation_line(quotation)
             rec.is_saleorder = True
-
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
