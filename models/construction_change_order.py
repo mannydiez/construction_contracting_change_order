@@ -2,10 +2,9 @@
 
 from openerp import models, fields, api, _
 from odoo.exceptions import UserError
-import logging
-_logger = logging.getLogger(__name__)
+import logging 
+log = logging.getLogger(__name__)
 
-_logger.critical('ConstructionChangeOrder INSTALLED')
 class ConstructionChangeOrder(models.Model):
     _name = 'construction.change.order'
     _description = "Change Order"
@@ -220,7 +219,6 @@ class ConstructionChangeOrder(models.Model):
 
     @api.model
     def create(self, vals):
-        _logger.critical('CREATE en ConstructionChangeOrder MODULE HAS BEEN SUCCESSFULLY OVERRIDE')
         name = self.env['ir.sequence'].next_by_code('construction.change.order.seq')
         vals.update({
         'name': name
@@ -233,7 +231,6 @@ class ConstructionChangeOrder(models.Model):
 
     @api.multi
     def write(self,vals):
-        _logger.critical('WRITE en ConstructionChangeOrder MODULE HAS BEEN SUCCESSFULLY OVERRIDE')
         if vals.get('project_id'):
             project_obj = self.env['project.project'].browse(vals['project_id'])
             vals.update({'analytic_account_id':project_obj.analytic_account_id.id})
@@ -288,6 +285,10 @@ class ConstructionChangeOrder(models.Model):
     def draft_state(self):
         for rec in self:
             rec.state = 'draft'
+            rec.confirm_by = False
+            rec.approve_by = False
+            rec.confirm_date = False
+            rec.approve_date = False
 
     @api.multi
     def reject_state(self):
